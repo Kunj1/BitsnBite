@@ -1,0 +1,204 @@
+Directory Structure for the Backend:
+
+backend/
+├── src/
+│   ├── controllers/
+│   │   ├── auth.controller.js
+│   │   ├── restaurant.controller.js
+│   │   ├── order.controller.js
+│   │   ├── carts.controller.js
+│   │   ├── users.controller.js
+│   │   ├── addresses.controller.js
+│   │   ├── payments.controller.js
+│   │   ├── reviews.controller.js
+│   │   └── admin.controller.js
+│   ├── routes/
+│   │   ├── auth.routes.js
+│   │   ├── restaurant.routes.js
+│   │   ├── order.routes.js
+│   │   ├── cart.routes.js
+│   │   ├── user.routes.js
+│   │   ├── address.routes.js
+│   │   ├── payment.routes.js
+│   │   ├── review.routes.js
+│   │   └── admin.routes.js
+│   ├── services/
+│   │   ├── auth.service.js
+│   │   ├── restaurant.service.js
+│   │   ├── order.service.js    
+│   │   ├── cart.service.js
+│   │   ├── user.service.js
+│   │   ├── address.service.js
+│   │   ├── payment.service.js
+│   │   ├── review.service.js
+│   │   └── admin.service.js
+│   ├── models/
+│   │   ├── User.js
+│   │   ├── Restaurant.js
+│   │   ├── Order.js
+│   │   ├── Cart.js
+│   │   ├── Address.js
+│   │   ├── Payment.js
+│   │   └── Review.js
+│   ├── config/
+│   │   ├── index.js
+│   │   ├── logger.config.js
+│   │   └── email.config.js
+│   ├── utils/
+│   │   └── index.js
+│   ├── middleware/
+│   │   ├── auth.middleware.js
+│   │   └── error-handler.middleware.js
+│   ├── notifications/
+│   │   └── notification.service.js
+│   └── index.js
+├── package.json
+├── package-lock.json
+└── .env
+
+Endpoints Needed for Each Category:
+
+Auth:
+
+POST /auth/register
+POST /auth/login
+POST /auth/logout
+POST /auth/password-reset
+
+Restaurants:
+
+GET /restaurants
+GET /restaurants/:id
+POST /restaurants
+PUT /restaurants/:id
+DELETE /restaurants/:id
+
+Orders:
+
+GET /orders
+GET /orders/:id
+POST /orders
+PUT /orders/:id
+DELETE /orders/:id
+
+Carts:
+
+GET /carts
+GET /carts/:id
+POST /carts
+PUT /carts/:id
+DELETE /carts/:id
+
+Users:
+
+GET /users
+GET /users/:id
+PUT /users/:id
+
+Addresses:
+
+GET /addresses
+GET /addresses/:id
+POST /addresses
+PUT /addresses/:id
+DELETE /addresses/:id
+
+Payments:
+
+GET /payments
+GET /payments/:id
+POST /payments
+
+Reviews:
+
+GET /reviews
+GET /reviews/:id
+POST /reviews
+PUT /reviews/:id
+DELETE /reviews/:id
+
+Admin:
+
+GET /admin/orders
+GET /admin/restaurants
+POST /admin/restaurants
+PUT /admin/restaurants/:id
+DELETE /admin/restaurants/:id
+GET /admin/users
+GET /admin/users/:id
+PUT /admin/users/:id
+GET /admin/payments
+GET /admin/payments/:id
+GET /admin/reviews
+GET /admin/reviews/:id
+
+Notification:
+To be used by other service and controller files to send emails(using mailgun api) for notifications of order placed and otps and everything.
+
+
+
+
+Epic 1: User Authentication & Profile Management
+1.	User Registration & Login: Secure user account creation, login, and logout.
+2.	OAuth Integration: Support for login via Google, Facebook, etc.
+3.	Profile Management: Update user information, profile photo, and preferences.
+4.	Saved Addresses: Store and manage multiple delivery addresses.
+5.	Password Management: Password reset and update options.
+________________________________________
+Epic 2: Restaurant Discovery
+6. Location-Based Search: Search for restaurants near the user’s current or selected location. 
+7. Filter Options: Filter restaurants by cuisine, rating, pricing, offers, etc. 
+8. Restaurant Details: Detailed view of restaurant profile, including menu, average cost, ratings, etc. 
+9. Favorites: Option to mark restaurants as favorites for easy access.
+________________________________________
+Epic 3: Menu & Item Management 
+10. Menu Display: Display restaurant menus with item details, prices, and availability. 
+11. Add/Remove Items in Cart: Select items, adjust quantities, and remove items from the cart. 
+12. Add-Ons & Customizations: Choose add-ons and customize items where available.
+________________________________________
+Epic 4: Ordering & Cart 
+13. Order Review & Confirmation: Review cart items, total cost, and confirm the order. 
+14. Delivery Address Selection: Choose from saved addresses or enter a new one. 
+15. Order Tracking: Real-time tracking of order status and estimated delivery time. 
+16. Order History: View past orders with details and reorder option.
+________________________________________
+Epic 5: Payment Processing 
+17. Payment Gateway Integration: Support for multiple payment options (credit/debit card, UPI, etc.). 
+18. Apply Coupons: Apply promo codes and display discounts. 
+19. Order Receipts: Generate and send order receipts via email or SMS.
+________________________________________
+Epic 6: Notifications 
+20. Order Status Updates: Notifications for order status changes. 
+21. Promotional Notifications: Notify users about special offers or discounts. 
+22. Delivery ETA Updates: Timely notifications about expected delivery time and delays, if any.
+________________________________________
+Epic 7: Ratings & Reviews 
+23. Post-Order Review Prompt: Allow users to review restaurants and items after order delivery. 
+24. Rating System: Users can rate both the restaurant and the delivery experience. 
+25. View Reviews: Display recent and top reviews on restaurant profiles.
+________________________________________
+Epic 8: Delivery Management 
+26. Assign Delivery Personnel: Match order with an available delivery person based on location. 
+27. Delivery Tracking for Users: Show real-time tracking of the delivery person’s location. 
+28. Delivery Personnel Profile: View details like name and contact of the assigned delivery person.
+________________________________________
+Epic 9: Customer Support 
+29. In-App Chat Support: Connect users with support for live assistance. 
+30. Help Center & FAQ: Provide answers to common questions and order-related support.
+________________________________________
+Epic 10: Admin Management 
+31. Restaurant Onboarding & Management: Add, update, or remove restaurant listings. 
+32. Menu Item Management: Add, edit, or remove menu items, prices, and descriptions. 
+33. Order Management: View and manage all incoming orders, assign delivery personnel, and update statuses. 
+34. Coupon/Discount Management: Add and control promo codes and special offers. 
+35. Analytics Dashboard: Basic insights on popular restaurants, order volumes, peak times, etc.
+________________________________________
+Epic 11: Security & Privacy 
+36. Data Encryption: Secure sensitive data (user details, payment info). 
+37. Access Control: Role-based permissions for users, delivery personnel, and admins. 
+38. Session Management: Manage user sessions for security.
+________________________________________
+Epic 12: Miscellaneous 
+39. Order Cancellation & Refund: Support for order cancellation with refund processing. 
+40. Service Ratings: Collect user feedback on support and overall app experience.
+

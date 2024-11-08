@@ -1,0 +1,223 @@
+i need to create backend for a food delivery app (swiggy clone). 
+i am attaching the directory structure. start giving me the codes of the files. the codes should have complete logic. 
+use nodejs and fastify.
+i already have the model files completed. i have the error-handler and the logger codes done. 
+i have completed the auth, admin, user, restaurant, cart and order - controller, routes and services files(we have used fastify till now.) 
+
+Directory Structure for the Backend:
+
+backend/
+├── src/
+│   ├── controllers/
+│   │   ├── auth.controller.js
+│   │   ├── restaurant.controller.js
+│   │   ├── order.controller.js
+│   │   ├── carts.controller.js
+│   │   ├── users.controller.js
+│   │   ├── addresses.controller.js
+│   │   ├── payments.controller.js
+│   │   ├── reviews.controller.js
+│   │   └── admin.controller.js
+│   ├── routes/
+│   │   ├── auth.routes.js
+│   │   ├── restaurant.routes.js
+│   │   ├── order.routes.js
+│   │   ├── cart.routes.js
+│   │   ├── user.routes.js
+│   │   ├── address.routes.js
+│   │   ├── payment.routes.js
+│   │   ├── review.routes.js
+│   │   └── admin.routes.js
+│   ├── services/
+│   │   ├── auth.service.js
+│   │   ├── restaurant.service.js
+│   │   ├── order.service.js    
+│   │   ├── cart.service.js
+│   │   ├── user.service.js
+│   │   ├── address.service.js
+│   │   ├── payment.service.js
+│   │   ├── review.service.js
+│   │   └── admin.service.js
+│   ├── models/
+│   │   ├── User.js
+│   │   ├── Restaurant.js
+│   │   ├── Order.js
+│   │   ├── Cart.js
+│   │   ├── Address.js
+│   │   ├── Payment.js
+│   │   └── Review.js
+│   ├── config/
+│   │   ├── index.js
+│   │   ├── logger.config.js
+│   │   └── email.config.js
+│   ├── utils/
+│   │   ├── errors.js
+│   │   └── index.js
+│   ├── middleware/
+│   │   ├── auth.middleware.js
+│   │   └── error-handler.middleware.js
+│   ├── notifications/
+│   │   └── notification.service.js
+│   └── index.js
+├── package.json
+├── error.log
+├── combined.log
+├── package-lock.json
+└── .env
+
+Endpoints Needed for Each Category:
+
+Auth:
+
+POST /auth/register
+POST /auth/login
+POST /auth/logout
+POST /auth/password-reset
+
+Restaurants:
+
+GET /restaurants
+GET /restaurants/:id
+POST /restaurants
+PUT /restaurants/:id
+DELETE /restaurants/:id
+
+Orders:
+
+GET /orders
+GET /orders/:id
+POST /orders
+PUT /orders/:id
+DELETE /orders/:id
+
+Carts:
+
+GET /carts
+GET /carts/:id
+POST /carts
+PUT /carts/:id
+DELETE /carts/:id
+
+Users:
+
+GET /users
+GET /users/:id
+PUT /users/:id
+
+Addresses:
+
+GET /addresses
+GET /addresses/:id
+POST /addresses
+PUT /addresses/:id
+DELETE /addresses/:id
+
+Payments:
+
+GET /payments
+GET /payments/:id
+POST /payments
+
+Reviews:
+
+GET /reviews
+GET /reviews/:id
+POST /reviews
+PUT /reviews/:id
+DELETE /reviews/:id
+
+Admin:
+
+GET /admin/orders
+GET /admin/restaurants
+POST /admin/restaurants
+PUT /admin/restaurants/:id
+DELETE /admin/restaurants/:id
+GET /admin/users
+GET /admin/users/:id
+PUT /admin/users/:id
+GET /admin/payments
+GET /admin/payments/:id
+GET /admin/reviews
+GET /admin/reviews/:id
+
+Notification:
+To be used by other service and controller files to send emails(using mailgun api) for notifications of order placed and otps and everything.
+
+backend\src\config\logger.config.js
+import winston from 'winston';
+...
+export default logger;
+
+the error-handler file is also complete. you can use that too
+
+
+src\notifications\notification.service.js:
+
+1. sendEmail(to, subject, message, html = null)
+Purpose: Sends a general email with the provided subject and message.
+Parameters:
+to (String): Recipient's email address.
+subject (String): Subject line of the email.
+message (String): Plain text message content.
+html (String, optional): HTML content of the email. If not provided, it defaults to <p>${message}</p>.
+Usage: Called for generic email notifications with custom content.
+2. sendOrderConfirmation(order, user)
+Purpose: Sends an order confirmation email with detailed order and user information.
+Parameters:
+order (Object): Order details, expected to include:
+_id (String): Unique order identifier.
+totalAmount (Number): Total amount of the order.
+deliveryAddress (String): Address for order delivery.
+estimatedDeliveryTime (String or Date): Expected delivery time for the order.
+user (Object): User information, expected to include:
+name (String): User's name.
+email (String): User's email address.
+Usage: Called when confirming a user’s order after it is placed.
+3. sendOTP(email, otp)
+Purpose: Sends a One-Time Password (OTP) email to the user.
+Parameters:
+email (String): Recipient's email address.
+otp (String or Number): OTP code to be sent to the user.
+Usage: Called during authentication processes, like account verification or login.
+4. sendPasswordReset(email, resetToken)
+Purpose: Sends a password reset link to the user’s email.
+Parameters:
+email (String): Recipient's email address.
+resetToken (String): Token used to reset the user's password.
+Usage: Called when a user requests a password reset.
+Additional Note: resetLink is dynamically generated using the FRONTEND_URL environment variable for redirection.
+5. sendOrderStatusUpdate(order, user, status)
+Purpose: Sends an email update about the order status to the user.
+Parameters:
+order (Object): Order details, expected to include:
+_id (String): Unique identifier for the order.
+user (Object): User information, expected to include:
+name (String): User's name.
+email (String): User's email address.
+status (String): New status of the order (e.g., "Shipped", "Delivered").
+Usage: Called to notify the user of a status change in their order.
+
+
+src\middleware\auth.middleware.js:
+
+1)authenticate(request, reply):
+
+Verifies the JWT access token from the request header.
+Retrieves and adds the authenticated user (excluding sensitive info like passwords) to the request object for further use.
+2) authorize(roles):
+
+Accepts specific roles (e.g., 'admin', 'user') as parameters.
+Allows access only if the authenticated user’s role matches the allowed roles.
+3) isRestaurantOwner(request, reply):
+
+Checks if the authenticated user is the owner of a restaurant based on a restaurantId parameter.
+Responds with 403 Forbidden if the user is not the restaurant owner, allowing for better ownership control.
+4) isAdmin(request, reply):
+
+Grants access only if the user’s role is 'admin'.
+Responds with a 403 Forbidden if the user does not have admin privileges.
+5) refreshToken(request, reply):
+
+Verifies the refresh token from the request body to issue a new access token.
+If valid, generates a new JWT access token, improving user session management without requiring re-authentication.
