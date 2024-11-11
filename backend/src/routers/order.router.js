@@ -61,7 +61,7 @@ router.put(
     }
 
     order.paymentId = paymentId;
-    order.status = OrderStatus.PAYED;
+    order.status = OrderStatus.PAID;
     await order.save();
 
     sendEmailReceipt(order);
