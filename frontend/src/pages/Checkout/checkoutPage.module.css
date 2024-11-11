@@ -1,0 +1,42 @@
+.container {
+  margin-top: 1rem;
+  display: flex;
+  margin: 0 1rem 6rem 1rem; /* Reduced space on left and right */
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.content-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%; /* Full width to allow for space between columns */
+}
+
+.left-column {
+  width: 45%; /* Increased width for left column */
+  margin-right: 2rem; /* Space between the columns */
+  margin-left: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.right-column {
+  width: 45%; /* Right column should have same width as left */
+  margin-top: 5rem;
+}
+
+.summary {
+  display: flex;
+  flex-direction: column;
+}
+
+.buttons_container {
+  flex-basis: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.buttons {
+  margin-top: 2rem;
+  width: 35rem;
+}
